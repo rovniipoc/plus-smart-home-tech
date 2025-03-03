@@ -2,6 +2,7 @@ package ru.yandex.practicum.event.model.sensor_event;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.Instant;
@@ -22,7 +23,9 @@ import java.time.Instant;
 @Data
 public abstract class SensorEvent {
 
+    @NotBlank
     private String id;
+    @NotBlank
     private String hubId;
     private Instant timestamp = Instant.now();
 
