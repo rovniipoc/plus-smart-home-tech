@@ -1,11 +1,11 @@
-package ru.practicum.smart_home;
+package ru.yandex.practicum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SmartHomeTech {
+public class CollectorApp {
     public static void main(String[] args) {
-        SpringApplication.run(SmartHomeTech.class, args);
+        SpringApplication.run(CollectorApp.class, args);
     }
 }

@@ -1,4 +1,4 @@
-package ru.practicum.smart_home.event.model.sensor_event;
+package ru.yandex.practicum.event.model.sensor_event;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,14 +7,13 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class MotionSensorEvent extends SensorEvent {
+public class LightSensorEvent extends SensorEvent {
 
     private int linkQuality;
-    private boolean motion;
-    private int voltage;
+    private int luminosity;
 
     @Override
     public SensorEventType getType() {
-        return SensorEventType.MOTION_SENSOR_EVENT;
+        return SensorEventType.LIGHT_SENSOR_EVENT;
     }
 }

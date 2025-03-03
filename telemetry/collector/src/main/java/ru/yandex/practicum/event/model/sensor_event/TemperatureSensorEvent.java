@@ -1,4 +1,4 @@
-package ru.practicum.smart_home.event.model.sensor_event;
+package ru.yandex.practicum.event.model.sensor_event;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,14 +7,13 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ClimateSensorEvent extends SensorEvent {
+public class TemperatureSensorEvent extends SensorEvent {
 
     private int temperatureC;
-    private int humidity;
-    private int co2Level;
+    private int temperatureF;
 
     @Override
     public SensorEventType getType() {
-        return SensorEventType.CLIMATE_SENSOR_EVENT;
+        return SensorEventType.TEMPERATURE_SENSOR_EVENT;
     }
 }

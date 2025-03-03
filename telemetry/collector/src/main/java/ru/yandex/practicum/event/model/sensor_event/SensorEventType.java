@@ -1,4 +1,4 @@
-package ru.practicum.smart_home.event.model.sensor_event;
+package ru.yandex.practicum.event.model.sensor_event;
 
 public enum SensorEventType {
     MOTION_SENSOR_EVENT,

@@ -1,6 +1,5 @@
-package ru.practicum.smart_home.event.model.sensor_event;
+package ru.yandex.practicum.event.model.sensor_event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
@@ -25,8 +24,6 @@ public abstract class SensorEvent {
 
     private String id;
     private String hubId;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Instant timestamp = Instant.now();
 
     public abstract SensorEventType getType();
