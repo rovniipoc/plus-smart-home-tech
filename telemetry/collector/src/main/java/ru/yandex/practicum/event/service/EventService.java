@@ -20,7 +20,7 @@ public class EventService {
                 SENSORS_TOPIC,
                 null,
                 event.getTimestamp().toEpochMilli(),
-                null,
+                event.getHubId(),
                 SensorEventMapper.toSensorEventAvro(event))
         );
     }
