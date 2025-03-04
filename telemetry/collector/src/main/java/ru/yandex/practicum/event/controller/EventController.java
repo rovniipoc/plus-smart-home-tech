@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.yandex.practicum.event.model.hub_event.HubEvent;
 import ru.yandex.practicum.event.service.EventService;
 import ru.yandex.practicum.event.model.sensor_event.SensorEvent;
 
@@ -27,8 +28,10 @@ public class EventController {
         log.info("Выполнен запрос Post /events/sensors с телом = {}", event);
     }
 
-//    @PostMapping("/hubs")
-//    public void collectHubEvent(@Valid @RequestBody HubEvent event) {
-//
-//    }
+    @PostMapping("/hubs")
+    public void collectHubEvent(@Valid @RequestBody HubEvent event) {
+        log.info("Поступил запрос Post /events/hubs с телом = {}", event);
+        service.sendHubEvent(event);
+        log.info("Выполнен запрос Post /events/hubs с телом = {}", event);
+    }
 }
