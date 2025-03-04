@@ -1,6 +1,7 @@
 package ru.yandex.practicum.event.model.hub_event.device;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +16,7 @@ public class DeviceAddedEvent extends HubEvent {
     @NotBlank
     String id;
 
-    @NotBlank
+    @NotNull
     DeviceType deviceType;
 
     @Override
