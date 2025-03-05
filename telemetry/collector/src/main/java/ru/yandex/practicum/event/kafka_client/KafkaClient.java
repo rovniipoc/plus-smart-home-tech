@@ -7,4 +7,6 @@ public interface KafkaClient {
 
     Producer<String, SpecificRecordBase> getProducer();
 
+    void stop();
+
 }

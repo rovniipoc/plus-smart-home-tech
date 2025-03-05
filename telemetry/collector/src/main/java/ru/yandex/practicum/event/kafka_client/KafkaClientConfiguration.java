@@ -8,6 +8,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
 import java.util.Properties;
 
 @Configuration
@@ -25,6 +26,14 @@ public class KafkaClientConfiguration {
                     initProducer();
                 }
                 return producer;
+            }
+
+            @Override
+            public void stop() {
+                if (producer != null) {
+                    producer.flush();
+                    producer.close(Duration.ofSeconds(5));
+                }
             }
 
             private void initProducer() {

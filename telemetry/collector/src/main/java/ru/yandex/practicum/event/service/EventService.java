@@ -1,5 +1,6 @@
 package ru.yandex.practicum.event.service;
 
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class EventService {
                 event.getHubId(),
                 EventMapper.toHubEventAvro(event))
         );
+    }
+
+    @PreDestroy
+    public void stop() {
+        kafkaClient.stop();
     }
 
 }
