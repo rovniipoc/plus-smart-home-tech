@@ -6,7 +6,7 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
-import ru.yandex.practicum.event.handler.SensorEventHandler;
+import ru.yandex.practicum.event.handler.sensor.SensorEventHandler;
 import ru.yandex.practicum.grpc.telemetry.collector.CollectorControllerGrpc;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 
