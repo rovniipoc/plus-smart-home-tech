@@ -31,7 +31,7 @@ public class MotionSensorEventHandler implements SensorEventHandler {
         MotionSensorAvro motionSensorAvro = MotionSensorAvro.newBuilder()
                 .setMotion(motionSensorProto.getMotion())
                 .setVoltage(motionSensorProto.getVoltage())
-                .setLinkQuality(motionSensorProto.getVoltage())
+                .setLinkQuality(motionSensorProto.getLinkQuality())
                 .build();
 
         return SensorEventAvro.newBuilder()
