@@ -53,8 +53,8 @@ public class SnapshotService {
         Если нет, то создаём новый
         */
         SensorsSnapshotAvro snapshot;
-        if (snapshots.containsKey(event.getId())) {
-            snapshot = snapshots.get(event.getId());
+        if (snapshots.containsKey(event.getHubId())) {
+            snapshot = snapshots.get(event.getHubId());
         } else {
             snapshot = SensorsSnapshotAvro.newBuilder()
                     .setHubId(event.getHubId())
