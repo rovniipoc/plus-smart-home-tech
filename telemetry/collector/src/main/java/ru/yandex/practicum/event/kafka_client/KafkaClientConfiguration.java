@@ -50,7 +50,6 @@ public class KafkaClientConfiguration {
                 producer = new KafkaProducer<>(config);
             }
 
-
         };
     }
 }
