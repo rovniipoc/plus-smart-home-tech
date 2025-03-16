@@ -72,9 +72,8 @@ public class SnapshotService {
         вернув Optional.empty()
         */
         SensorStateAvro oldState = snapshot.getSensorsState().get(event.getId());
-        if (oldState != null
-            || event.getTimestamp().isBefore(oldState.getTimestamp())
-            || event.getPayload() == oldState.getData()) {
+        if (oldState != null && (event.getTimestamp().isBefore(oldState.getTimestamp())
+                                 || event.getPayload().equals(oldState.getData()))) {
 
             log.info("В Aggregator проигнорирован SensorEventAvro {}", event);
             return Optional.empty();
