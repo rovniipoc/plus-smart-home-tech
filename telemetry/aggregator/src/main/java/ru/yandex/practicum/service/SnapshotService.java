@@ -87,7 +87,7 @@ public class SnapshotService {
         Возвращаем снапшот - Optional.of(snapshot).
         */
         loadDataToSnapshot(snapshot, event);
-        snapshots.put(snapshot.getHubId(), snapshot);
+        snapshots.put(event.getHubId(), snapshot);
 
         log.info("В Aggregator сформирован новый Snapshot");
         return Optional.of(snapshot);
