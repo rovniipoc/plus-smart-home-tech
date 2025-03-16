@@ -17,6 +17,7 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import ru.yandex.practicum.kafka_client.KafkaClient;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -57,6 +58,7 @@ public class SnapshotService {
         } else {
             snapshot = SensorsSnapshotAvro.newBuilder()
                     .setHubId(event.getHubId())
+                    .setTimestamp(Instant.now())
                     .setSensorsState(new HashMap<>())
                     .build();
         }
