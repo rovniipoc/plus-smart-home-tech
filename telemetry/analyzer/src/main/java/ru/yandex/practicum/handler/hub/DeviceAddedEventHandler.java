@@ -17,7 +17,7 @@ public class DeviceAddedEventHandler implements HubEventHandler {
 
     @Override
     public String getEventType() {
-        return DeviceAddedEventAvro.getClassSchema().getName();
+        return DeviceAddedEventAvro.class.getName();
     }
 
     @Override
