@@ -6,10 +6,10 @@ import lombok.Data;
 @Entity
 @Table(name = "sensors")
 @Data
-public class Sensor {
+public class Sensor { //он же Device
 
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "hub_id")
     private String hubId;
