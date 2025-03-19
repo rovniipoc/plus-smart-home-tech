@@ -5,6 +5,10 @@ import lombok.Data;
 
 @Entity
 @Table(name = "conditions")
+@SecondaryTable(
+        name = "scenario_conditions",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "condition_id")
+)
 @Data
 public class Condition {
 
@@ -22,5 +26,9 @@ public class Condition {
 
     @Column(name = "value")
     private Integer value;
+
+    @ManyToOne()
+    @JoinColumn(name = "sensor_id", table = "scenario_conditions")
+    Sensor sensor;
 
 }
