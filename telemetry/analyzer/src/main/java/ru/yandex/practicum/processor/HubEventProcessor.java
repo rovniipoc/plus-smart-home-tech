@@ -47,6 +47,7 @@ public class HubEventProcessor implements Runnable {
                         HubEventHandler::getEventType,
                         Function.identity()
                 ));
+        log.info("Создана база обработчиков: {}", hubEventHandlers);
     }
 
     @Override
