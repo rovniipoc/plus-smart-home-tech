@@ -12,4 +12,6 @@ public interface SensorRepository extends JpaRepository<Sensor, Long> {
 
     Optional<Sensor> findByIdAndHubId(String id, String hubId);
 
+    void deleteById(String id);
+
 }
