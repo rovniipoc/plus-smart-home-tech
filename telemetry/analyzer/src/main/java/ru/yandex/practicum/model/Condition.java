@@ -13,10 +13,12 @@ public class Condition {
     private Long id;
 
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ConditionType type;
 
     @Column(name = "operation")
-    private String operation;
+    @Enumerated(EnumType.STRING)
+    private ConditionOperation operation;
 
     @Column(name = "value")
     private Integer value;
