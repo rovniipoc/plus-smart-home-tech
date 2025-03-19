@@ -3,6 +3,8 @@ package ru.yandex.practicum.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "scenarios")
 @Data
@@ -17,5 +19,21 @@ public class Scenario {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "scenario_conditions",
+            joinColumns = @JoinColumn(name = "scenario_id"),
+            inverseJoinColumns = @JoinColumn(name = "condition_id")
+    )
+    private List<Condition> conditions;
+
+    @ManyToMany
+    @JoinTable(
+            name = "scenario_actions",
+            joinColumns = @JoinColumn(name = "scenario_id"),
+            inverseJoinColumns = @JoinColumn(name = "action_id")
+    )
+    private List<Action> actions;
 
 }
