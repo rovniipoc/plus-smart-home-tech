@@ -8,7 +8,7 @@ kafka:
       topics:
         - telemetry.hubs.v1
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: ru.yandex.practicum.avro.HubEventDeserializer
+      value-deserializer: ru.yandex.practicum.deserializer.HubEventDeserializer
       poll-timeout-sec: 5
     snapshot-consumer:
       client-id: snapshot-consumer
@@ -16,7 +16,7 @@ kafka:
       topics:
         - telemetry.snapshots.v1.
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: ru.yandex.practicum.avro.SensorSnapshotDeserializer
+      value-deserializer: ru.yandex.practicum.deserializer.SensorSnapshotDeserializer
       poll-timeout-sec: 5
 grpc:
   client:
