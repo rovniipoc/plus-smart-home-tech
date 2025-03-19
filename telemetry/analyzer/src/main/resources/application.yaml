@@ -18,19 +18,26 @@ kafka:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: ru.yandex.practicum.avro.SensorSnapshotDeserializer
       poll-timeout-sec: 5
-
-
-
-
-
-#kafkaServer=localhost:9092
-#snapshotTopic=telemetry.snapshots.v1
-#sensorEventTopic=telemetry.sensors.v1
-#hubEventTopic=telemetry.hubs.v1
-#
-#pollTimeoutMs=5000
-#closeClientTimeoutSec=5
-#analyzerSnapshotConsumerId=analyzer-snapshot-consumer
-#analyzerSnapshotConsumerGroupId=analyzer-snapshot-consumer-group
-#analyzerHubEventConsumerId=analyzer-hub-event-consumer
-#analyzerHubEventConsumerGroupId=analyzer-hub-event-consumer-group
+grpc:
+  client:
+    hub-router:
+      address: 'static://localhost:59090'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: dbuser
+    password: 12345
+    url: jdbc:postgresql://localhost:6542/analyzer
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
+  sql:
+    init:
+      mode: always
