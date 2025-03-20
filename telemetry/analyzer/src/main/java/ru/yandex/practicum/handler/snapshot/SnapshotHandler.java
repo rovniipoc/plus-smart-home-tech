@@ -103,12 +103,32 @@ public class SnapshotHandler {
 
     private boolean checkCondition(Condition condition, SensorStateAvro sensorStateAvro) {
 
+        if (condition == null) {
+            log.warn("Condition is null");
+            return false;
+        }
+
+        if (sensorStateAvro == null) {
+            log.warn("SensorStateAvro is null for condition: {}", condition);
+            return false;
+        }
+
+        if (sensorStateAvro.getData() == null) {
+            log.warn("Sensor data is null for condition: {}", condition);
+            return false;
+        }
+
         String type = sensorStateAvro.getData().getClass().getName();
         if (!sensorEventHandlers.containsKey(type)) {
             throw new IllegalArgumentException("Не найден обработчик для сенсора: " + type);
         }
 
         Integer value = sensorEventHandlers.get(type).getSensorValue(condition.getType(), sensorStateAvro);
+
+        if (value == null) {
+            log.warn("Sensor value is null for condition: {}", condition);
+            return false;
+        }
 
         return switch (condition.getOperation()) {
             case ConditionOperation.LOWER_THAN -> value < condition.getValue();
