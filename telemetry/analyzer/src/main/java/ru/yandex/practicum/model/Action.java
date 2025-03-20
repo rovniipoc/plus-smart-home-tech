@@ -3,6 +3,8 @@ package ru.yandex.practicum.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "actions")
 @SecondaryTable(
@@ -29,6 +31,9 @@ public class Action {
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", table = "scenario_actions")
-    Sensor sensor;
+    private Sensor sensor;
+
+    @ManyToMany(mappedBy = "actions")
+    private List<Scenario> scenarios;
 
 }
