@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "conditions")
 @SecondaryTable(
@@ -33,8 +35,12 @@ public class Condition {
     @Column(name = "value")
     private Integer value;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "sensor_id", table = "scenario_conditions")
     Sensor sensor;
+
+    @ManyToMany
+    @JoinColumn(name = "scenario_id", table = "scenario_conditions")
+    List<Scenario> scenarios;
 
 }
