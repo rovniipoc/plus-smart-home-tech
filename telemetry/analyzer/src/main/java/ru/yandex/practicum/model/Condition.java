@@ -7,10 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "conditions")
-@SecondaryTable(
-        name = "scenario_conditions",
-        pkJoinColumns = @PrimaryKeyJoinColumn(name = "condition_id")
-)
 @Getter
 @Setter
 @Builder
@@ -34,7 +30,7 @@ public class Condition {
     private Integer value;
 
     @ManyToOne
-    @JoinColumn(name = "sensor_id", table = "scenario_conditions")
+    @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
     @ManyToMany(mappedBy = "conditions")
