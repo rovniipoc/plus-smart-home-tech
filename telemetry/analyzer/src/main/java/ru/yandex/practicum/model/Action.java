@@ -29,7 +29,7 @@ public class Action {
     @Column(name = "value")
     private Integer value;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "sensor_id", table = "scenario_actions")
     Sensor sensor;
 
