@@ -29,6 +29,7 @@ public class SnapshotProcessor implements Runnable {
 
     @Override
     public void run() {
+        log.info("Запущен SnapshotProcessor");
         try (Consumer<String, SensorsSnapshotAvro> snapshotConsumer = kafkaClient.getSnapshotConsumer()) {
 
             while (true) {

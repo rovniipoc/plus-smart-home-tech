@@ -17,7 +17,7 @@ public class AnalyzerApp {
 
         final HubEventProcessor hubEventProcessor = context.getBean(HubEventProcessor.class);
 
-        SnapshotProcessor snapshotProcessor = context.getBean(SnapshotProcessor.class);
+        final SnapshotProcessor snapshotProcessor = context.getBean(SnapshotProcessor.class);
 
         // запускаем в отдельном потоке обработчик событий
         // от пользовательских хабов
