@@ -12,7 +12,7 @@ public class SwitchSensorEventHandler implements SensorEventHandler {
 
     @Override
     public String getSensorType() {
-        return SwitchSensorAvro.getClassSchema().getName();
+        return SwitchSensorAvro.class.getName();
     }
 
     @Override

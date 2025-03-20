@@ -12,7 +12,7 @@ public class MotionSensorEventHandler implements SensorEventHandler {
 
     @Override
     public String getSensorType() {
-        return MotionSensorAvro.getClassSchema().getName();
+        return MotionSensorAvro.class.getName();
     }
 
     @Override

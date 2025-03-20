@@ -12,7 +12,7 @@ public class ClimateSensorEventHandler implements SensorEventHandler {
 
     @Override
     public String getSensorType() {
-        return ClimateSensorAvro.getClassSchema().getName();
+        return ClimateSensorAvro.class.getName();
     }
 
     @Override

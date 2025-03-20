@@ -18,7 +18,7 @@ public class ScenarioAddedEventHandler implements HubEventHandler {
 
     @Override
     public String getEventType() {
-        return ScenarioAddedEventAvro.getClassSchema().getName();
+        return ScenarioAddedEventAvro.class.getName();
     }
 
     @Transactional

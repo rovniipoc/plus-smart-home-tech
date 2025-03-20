@@ -12,7 +12,7 @@ public class TemperatureSensorEventHandler implements SensorEventHandler {
 
     @Override
     public String getSensorType() {
-        return TemperatureSensorAvro.getClassSchema().getName();
+        return TemperatureSensorAvro.class.getName();
     }
 
     @Override
