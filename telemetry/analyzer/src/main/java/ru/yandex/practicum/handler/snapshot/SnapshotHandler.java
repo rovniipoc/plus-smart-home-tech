@@ -46,6 +46,8 @@ public class SnapshotHandler {
 
     public void handle(SensorsSnapshotAvro snapshotAvro) {
 
+        log.info("На обработку поступил snapshot: {}", snapshotAvro);
+
         List<Scenario> scenarios = scenarioRepository.findByHubId(snapshotAvro.getHubId());
         Map<String, SensorStateAvro> sensorStates = snapshotAvro.getSensorsState();
 

@@ -52,6 +52,7 @@ public class HubEventProcessor implements Runnable {
 
     @Override
     public void run() {
+        log.info("Запущен HubEventProcessor");
         try (Consumer<String, HubEventAvro> hubEventConsumer = kafkaClient.getHubEventConsumer()) {
             while (true) {
                 Long pollTimeout = kafkaProperties.getHubConsumer().getPollTimeoutSec();

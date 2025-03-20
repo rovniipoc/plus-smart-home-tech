@@ -43,6 +43,7 @@ spring:
       mode: always
 logging:
   level:
+    root: INFO
     ru:
       yandex:
         practicum: DEBUG

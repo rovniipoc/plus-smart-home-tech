@@ -25,6 +25,8 @@ public class ScenarioAddedEventHandler implements HubEventHandler {
     @Override
     public void handle(HubEventAvro event) {
 
+        log.info("Поступил для сохранения scenario: {}", event);
+
         ScenarioAddedEventAvro scenarioEvent = (ScenarioAddedEventAvro) event.getPayload();
         Scenario scenario = new Scenario();
         scenario.setHubId(event.getHubId());
