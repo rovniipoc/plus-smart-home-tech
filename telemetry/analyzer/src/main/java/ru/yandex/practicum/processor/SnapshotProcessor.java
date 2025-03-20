@@ -33,9 +33,10 @@ public class SnapshotProcessor implements Runnable {
         try (Consumer<String, SensorsSnapshotAvro> snapshotConsumer = kafkaClient.getSnapshotConsumer()) {
 
             while (true) {
-
+                log.info("Начало цикла получения Snapshot");
                 Long pollTimeout = kafkaProperties.getSnapshotConsumer().getPollTimeoutSec();
                 ConsumerRecords<String, SensorsSnapshotAvro> records = snapshotConsumer.poll(Duration.ofMillis(pollTimeout));
+                log.info("Получены записи ConsumerRecords<String, SensorsSnapshotAvro> : {}", records);
 
                 int count = 0;
                 for (ConsumerRecord<String, SensorsSnapshotAvro> record : records) {
