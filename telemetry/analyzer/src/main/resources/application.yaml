@@ -14,7 +14,7 @@ kafka:
       client-id: snapshot-consumer
       group-id: analyzer-snapshot-group
       topics:
-        - telemetry.snapshots.v1.
+        - telemetry.snapshots.v1
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: ru.yandex.practicum.deserializer.SensorSnapshotDeserializer
       poll-timeout-sec: 5
