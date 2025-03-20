@@ -40,7 +40,11 @@ public class Condition {
     Sensor sensor;
 
     @ManyToMany
-    @JoinColumn(name = "scenario_id", table = "scenario_conditions")
+    @JoinTable(
+            name = "scenario_conditions",
+            joinColumns = @JoinColumn(name = "scenario_id"),
+            inverseJoinColumns = @JoinColumn(name = "condition_id")
+    )
     List<Scenario> scenarios;
 
 }
