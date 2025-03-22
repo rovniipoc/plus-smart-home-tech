@@ -23,7 +23,7 @@ public class ScenarioRemovedEventHandler implements HubEventHandler {
     public void handle(HubEventAvro event) {
         ScenarioRemovedEventAvro scenarioRemovedEvent = (ScenarioRemovedEventAvro) event.getPayload();
 
-        scenarioRepository.deleteByName(scenarioRemovedEvent.getName());
+        scenarioRepository.deleteByNameAndHubId(scenarioRemovedEvent.getName(), event.getHubId());
         log.info("Из БД удален scenario с name  = {}", scenarioRemovedEvent.getName());
     }
 
