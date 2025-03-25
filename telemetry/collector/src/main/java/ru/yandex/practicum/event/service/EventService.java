@@ -2,40 +2,50 @@ package ru.yandex.practicum.event.service;
 
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.event.kafka_client.KafkaClient;
-import ru.yandex.practicum.event.mapper.EventMapper;
-import ru.yandex.practicum.event.model.hub_event.HubEvent;
-import ru.yandex.practicum.event.model.sensor_event.SensorEvent;
+import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
+import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
+
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class EventService {
 
     private final KafkaClient kafkaClient;
 
-    private static final String SENSORS_TOPIC = "telemetry.sensors.v1";
-    private static final String HUB_TOPIC = "telemetry.hubs.v1";
+    @Value(value = "${sensorEventTopic}")
+    private String sensorsTopic;
 
-    public void sendSensorEvent(SensorEvent event) {
+    @Value(value = "${hubEventTopic}")
+    private String hubTopic;
+
+    public void sendSensorEvent(SensorEventAvro event) {
+        log.info("Отправка {} в топик {}", event, sensorsTopic);
         kafkaClient.getProducer().send(new ProducerRecord<>(
-                SENSORS_TOPIC,
+                sensorsTopic,
                 null,
                 event.getTimestamp().toEpochMilli(),
                 event.getHubId(),
-                EventMapper.toSensorEventAvro(event))
+                event)
         );
+        log.info("Выполнена отправка {} в топик {}", event, sensorsTopic);
     }
 
-    public void sendHubEvent(HubEvent event) {
+    public void sendHubEvent(HubEventAvro event) {
+        log.info("Отправка {} в топик {}", event, sensorsTopic);
         kafkaClient.getProducer().send(new ProducerRecord<>(
-                HUB_TOPIC,
+                hubTopic,
                 null,
                 event.getTimestamp().toEpochMilli(),
                 event.getHubId(),
-                EventMapper.toHubEventAvro(event))
+                event)
         );
+        log.info("Выполнена отправка {} в топик {}", event, sensorsTopic);
     }
 
     @PreDestroy
