@@ -27,5 +27,11 @@
       <artifactId>spring-cloud-config-server</artifactId>
     </dependency>
 
+    <dependency>
+      <!--   для использования ретраев при подключении к config-server   -->
+      <groupId>org.springframework.retry</groupId>
+      <artifactId>spring-retry</artifactId>
+    </dependency>
+
   </dependencies>
 </project>
