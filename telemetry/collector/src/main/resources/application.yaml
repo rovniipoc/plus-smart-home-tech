@@ -3,3 +3,25 @@ spring:
     name: collector
   config:
     import: configserver:http://localhost:8888
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# Эта настройка клиентской части позволяет отключить автоматическую регистрацию приложения как сервиса
+#eureka:
+#  client:
+#    registerWithEureka: false
+
+# Следующие две настройки позволяют управлять адресом, по которому сервис будет доступен сервису-реестру и другим клиентам
+#eureka:
+#  instance:
+#    preferIpAddress: false
+#    hostname: external.host
+
+# Дополнительные свойства сервиса можно задать с помощью параметра metadataMap:
+#eureka:
+#  instance:
+#    metadataMap:
+#      customParam: customValue
+#      anotherParam: anotherValue
