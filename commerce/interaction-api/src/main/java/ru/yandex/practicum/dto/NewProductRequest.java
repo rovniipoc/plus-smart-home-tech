@@ -16,22 +16,22 @@ public class NewProductRequest {
     UUID productId;
 
     @NotBlank
-    private String productName;
+    String productName;
 
     @NotBlank
-    private String description;
+    String description;
 
-    private String imageSrc;
-
-    @NotNull
-    private QuantityState quantityState;
+    String imageSrc;
 
     @NotNull
-    private ProductState productState;
+    QuantityState quantityState;
 
     @NotNull
-    private ProductCategory productCategory;
+    ProductState productState;
+
+    @NotNull
+    ProductCategory productCategory;
 
     @Min(value = 1, message = "Price must be at least 1")
-    private Double price;
+    Double price;
 }
