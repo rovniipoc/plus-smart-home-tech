@@ -7,11 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.dto.NewProductRequest;
 import ru.yandex.practicum.dto.ProductCategory;
 import ru.yandex.practicum.dto.ProductDto;
+import ru.yandex.practicum.dto.UpdateProductRequest;
+import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.mapper.ProductMapper;
 import ru.yandex.practicum.model.Product;
 import ru.yandex.practicum.repository.ProductRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +32,24 @@ public class ProductService {
     public List<ProductDto> getProductsByParams(ProductCategory category, Pageable pageable) {
         List<Product> products = productRepository.findAllByProductCategory(category, pageable);
         return ProductMapper.toProductDto(products);
+    }
+
+    @Transactional
+    public ProductDto updateProduct(UpdateProductRequest updateProductRequest) {
+        UUID id = updateProductRequest.getProductId();
+        Product existProduct = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
+
+        if (updateProductRequest.getImageSrc() == null || updateProductRequest.getImageSrc().isBlank()) {
+            updateProductRequest.setImageSrc(existProduct.getImageSrc());
+        }
+
+        if (updateProductRequest.getProductCategory() == null) {
+            updateProductRequest.setProductCategory(existProduct.getProductCategory());
+        }
+
+        Product updatedProduct = ProductMapper.toProduct(updateProductRequest);
+
+        return ProductMapper.toProductDto(productRepository.save(updatedProduct));
     }
 }
