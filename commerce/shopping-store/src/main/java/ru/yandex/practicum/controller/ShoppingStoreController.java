@@ -25,7 +25,7 @@ public class ShoppingStoreController {
     @Value("${ShoppingStore.api.prefix}")
     private String prefix;
 
-    @PostMapping
+    @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto createNewProduct(@Valid @RequestBody NewProductRequest newProductRequest) {
         log.info("Поступил запрос Post {} на создание Product с телом {}", prefix, newProductRequest);
