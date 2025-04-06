@@ -14,6 +14,7 @@ import ru.yandex.practicum.dto.UpdateProductRequest;
 import ru.yandex.practicum.service.ProductService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -52,5 +53,14 @@ public class ShoppingStoreController {
         ProductDto response = productService.updateProduct(updateProductRequest);
         log.info("Сформирован ответ Post {} с телом: {}", prefix, response);
         return response;
+    }
+
+    @PostMapping("/removeProductFromStore")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean removeProductFromStore(@RequestBody UUID id) {
+        log.info("Поступил запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
+        productService.removeProductFromStore(id);
+        log.info("Выполнен запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
+        return true;
     }
 }

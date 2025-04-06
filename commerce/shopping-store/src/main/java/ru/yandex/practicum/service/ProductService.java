@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.yandex.practicum.dto.NewProductRequest;
-import ru.yandex.practicum.dto.ProductCategory;
-import ru.yandex.practicum.dto.ProductDto;
-import ru.yandex.practicum.dto.UpdateProductRequest;
+import ru.yandex.practicum.dto.*;
 import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.mapper.ProductMapper;
 import ru.yandex.practicum.model.Product;
@@ -51,5 +48,14 @@ public class ProductService {
         Product updatedProduct = ProductMapper.toProduct(updateProductRequest);
 
         return ProductMapper.toProductDto(productRepository.save(updatedProduct));
+    }
+
+    @Transactional
+    public boolean removeProductFromStore(UUID id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
+        product.setProductState(ProductState.DEACTIVATE);
+        productRepository.save(product);
+        return true;
     }
 }
