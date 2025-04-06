@@ -34,8 +34,7 @@ public class ProductService {
     @Transactional
     public ProductDto updateProduct(UpdateProductRequest updateProductRequest) {
         UUID id = updateProductRequest.getProductId();
-        Product existProduct = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
+        Product existProduct = checkProductExist(id);
 
         if (updateProductRequest.getImageSrc() == null || updateProductRequest.getImageSrc().isBlank()) {
             updateProductRequest.setImageSrc(existProduct.getImageSrc());
@@ -52,10 +51,24 @@ public class ProductService {
 
     @Transactional
     public boolean removeProductFromStore(UUID id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
-        product.setProductState(ProductState.DEACTIVATE);
-        productRepository.save(product);
+        Product existProduct = checkProductExist(id);
+        existProduct.setProductState(ProductState.DEACTIVATE);
+        productRepository.save(existProduct);
         return true;
+    }
+
+    @Transactional
+    public boolean setProductQuantityState(SetProductQuantityStateRequest request) {
+        UUID id = request.getProductId();
+        QuantityState quantityState = request.getQuantityState();
+        Product existProduct = checkProductExist(id);
+        existProduct.setQuantityState(quantityState);
+        productRepository.save(existProduct);
+        return true;
+    }
+
+    private Product checkProductExist(UUID id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
     }
 }

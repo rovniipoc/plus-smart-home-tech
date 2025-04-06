@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.dto.NewProductRequest;
-import ru.yandex.practicum.dto.ProductCategory;
-import ru.yandex.practicum.dto.ProductDto;
-import ru.yandex.practicum.dto.UpdateProductRequest;
+import ru.yandex.practicum.dto.*;
 import ru.yandex.practicum.service.ProductService;
 
 import java.util.List;
@@ -39,7 +36,7 @@ public class ShoppingStoreController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDto> getProduct(@RequestParam(required = true) ProductCategory category,
-                                 @RequestParam(required = true) Pageable pageable) {
+                                       @RequestParam(required = true) Pageable pageable) {
         log.info("Поступил запрос Get {} на получение List<ProductDto> с параметрами category = {}, pageable = {}", prefix, category, pageable);
         List<ProductDto> response = productService.getProductsByParams(category, pageable);
         log.info("Сформирован ответ Get {} с телом: {}", prefix, response);
@@ -61,6 +58,15 @@ public class ShoppingStoreController {
         log.info("Поступил запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
         productService.removeProductFromStore(id);
         log.info("Выполнен запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
+        return true;
+    }
+
+    @PostMapping("/quantityState")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean setProductQuantityState(@Valid @RequestBody SetProductQuantityStateRequest request) {
+        log.info("Поступил запрос Post {}/quantityState на изменение количества Product с телом = {}", prefix, request);
+        productService.setProductQuantityState(request);
+        log.info("Выполнен запрос Post {}/quantityState на изменение количества Product с телом = {}", prefix, request);
         return true;
     }
 }
