@@ -67,6 +67,10 @@ public class ProductService {
         return true;
     }
 
+    public ProductDto getProduct(UUID id) {
+        return ProductMapper.toProductDto(checkProductExist(id));
+    }
+
     private Product checkProductExist(UUID id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
