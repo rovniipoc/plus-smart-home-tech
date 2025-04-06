@@ -1,78 +1,22 @@
 package ru.yandex.practicum.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.dto.*;
-import ru.yandex.practicum.exception.NotFoundException;
-import ru.yandex.practicum.mapper.ProductMapper;
-import ru.yandex.practicum.model.Product;
-import ru.yandex.practicum.repository.ProductRepository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class ProductService {
+public interface ProductService {
 
-    private final ProductRepository productRepository;
+    ProductDto createNewProduct(NewProductRequest newProductRequest);
 
-    @Transactional
-    public ProductDto createNewProduct(NewProductRequest newProductRequest) {
-        Product product = ProductMapper.toProduct(newProductRequest);
-        return ProductMapper.toProductDto(productRepository.save(product));
-    }
+    List<ProductDto> getProductsByParams(ProductCategory category, Pageable pageable);
 
-    public List<ProductDto> getProductsByParams(ProductCategory category, Pageable pageable) {
-        List<Product> products = productRepository.findAllByProductCategory(category, pageable);
-        return ProductMapper.toProductDto(products);
-    }
+    ProductDto updateProduct(UpdateProductRequest updateProductRequest);
 
-    @Transactional
-    public ProductDto updateProduct(UpdateProductRequest updateProductRequest) {
-        UUID id = updateProductRequest.getProductId();
-        Product existProduct = checkProductExist(id);
+    boolean removeProductFromStore(UUID id);
 
-        if (updateProductRequest.getImageSrc() == null || updateProductRequest.getImageSrc().isBlank()) {
-            updateProductRequest.setImageSrc(existProduct.getImageSrc());
-        }
+    boolean setProductQuantityState(SetProductQuantityStateRequest request);
 
-        if (updateProductRequest.getProductCategory() == null) {
-            updateProductRequest.setProductCategory(existProduct.getProductCategory());
-        }
-
-        Product updatedProduct = ProductMapper.toProduct(updateProductRequest);
-
-        return ProductMapper.toProductDto(productRepository.save(updatedProduct));
-    }
-
-    @Transactional
-    public boolean removeProductFromStore(UUID id) {
-        Product existProduct = checkProductExist(id);
-        existProduct.setProductState(ProductState.DEACTIVATE);
-        productRepository.save(existProduct);
-        return true;
-    }
-
-    @Transactional
-    public boolean setProductQuantityState(SetProductQuantityStateRequest request) {
-        UUID id = request.getProductId();
-        QuantityState quantityState = request.getQuantityState();
-        Product existProduct = checkProductExist(id);
-        existProduct.setQuantityState(quantityState);
-        productRepository.save(existProduct);
-        return true;
-    }
-
-    public ProductDto getProduct(UUID id) {
-        return ProductMapper.toProductDto(checkProductExist(id));
-    }
-
-    private Product checkProductExist(UUID id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Продукта с id = " + id + " не существует"));
-    }
+    ProductDto getProduct(UUID id);
 }
