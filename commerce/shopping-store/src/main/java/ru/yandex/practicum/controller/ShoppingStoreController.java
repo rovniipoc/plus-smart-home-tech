@@ -35,8 +35,8 @@ public class ShoppingStoreController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDto> getProduct(@RequestParam(required = true) ProductCategory category,
-                                       @RequestParam(required = true) Pageable pageable) {
+    public List<ProductDto> getProducts(@RequestParam(required = true) ProductCategory category,
+                                        @RequestParam(required = true) Pageable pageable) {
         log.info("Поступил запрос Get {} на получение List<ProductDto> с параметрами category = {}, pageable = {}", prefix, category, pageable);
         List<ProductDto> response = productService.getProductsByParams(category, pageable);
         log.info("Сформирован ответ Get {} с телом: {}", prefix, response);
@@ -68,5 +68,14 @@ public class ShoppingStoreController {
         productService.setProductQuantityState(request);
         log.info("Выполнен запрос Post {}/quantityState на изменение количества Product с телом = {}", prefix, request);
         return true;
+    }
+
+    @GetMapping("/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto getProducts(@PathVariable UUID productId) {
+        log.info("Поступил запрос Get {}/{} на получение ProductDto с id = {}", prefix, productId, productId);
+        ProductDto response = productService.getProduct(productId);
+        log.info("Сформирован ответ Get {}/{} с телом: {}", prefix, productId, response);
+        return response;
     }
 }
