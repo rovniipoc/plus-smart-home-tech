@@ -2,6 +2,7 @@ package ru.yandex.practicum.mapper;
 
 import ru.yandex.practicum.dto.NewProductRequest;
 import ru.yandex.practicum.dto.ProductDto;
+import ru.yandex.practicum.dto.UpdateProductRequest;
 import ru.yandex.practicum.model.Product;
 
 import java.util.ArrayList;
@@ -43,9 +44,30 @@ public class ProductMapper {
         return product;
     }
 
-    public static List<Product> toProduct(Iterable<NewProductRequest> products) {
+    public static List<Product> toProductsFromUpdateRequest(Iterable<NewProductRequest> products) {
         List<Product> result = new ArrayList<>();
         for (NewProductRequest product : products) {
+            result.add(toProduct(product));
+        }
+        return result;
+    }
+
+    public static Product toProduct(UpdateProductRequest updateProductRequest) {
+        Product product = new Product();
+        product.setProductId(updateProductRequest.getProductId());
+        product.setProductName(updateProductRequest.getProductName());
+        product.setDescription(updateProductRequest.getDescription());
+        product.setImageSrc(updateProductRequest.getImageSrc());
+        product.setQuantityState(updateProductRequest.getQuantityState());
+        product.setProductCategory(updateProductRequest.getProductCategory());
+        product.setProductState(updateProductRequest.getProductState());
+        product.setPrice(updateProductRequest.getPrice());
+        return product;
+    }
+
+    public static List<Product> toProduct(Iterable<UpdateProductRequest> products) {
+        List<Product> result = new ArrayList<>();
+        for (UpdateProductRequest product : products) {
             result.add(toProduct(product));
         }
         return result;
