@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS products
     product_state    VARCHAR,
     product_category VARCHAR,
     price            DOUBLE PRECISION
-)
+);
