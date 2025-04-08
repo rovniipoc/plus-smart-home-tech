@@ -24,7 +24,7 @@ public class ShoppingCart {
 
     @ElementCollection
     @CollectionTable(
-            name = "cart_items",
+            name = "cart_products",
             joinColumns = @JoinColumn(name = "cart_id"),
             foreignKey = @ForeignKey(name = "fk_cart_items_cart")
     )
