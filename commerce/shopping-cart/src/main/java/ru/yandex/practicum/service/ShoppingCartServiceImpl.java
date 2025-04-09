@@ -7,6 +7,7 @@ import ru.yandex.practicum.dto.ChangeProductQuantityRequest;
 import ru.yandex.practicum.dto.ShoppingCartDto;
 import ru.yandex.practicum.exception.DeactivatedCartException;
 import ru.yandex.practicum.exception.UnauthorizedUserException;
+import ru.yandex.practicum.feign.WarehouseClient;
 import ru.yandex.practicum.mapper.ShoppingCartMapper;
 import ru.yandex.practicum.model.ShoppingCart;
 import ru.yandex.practicum.model.ShoppingCartState;
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
+    private final WarehouseClient warehouseClient;
 
     @Override
     public ShoppingCartDto getShoppingCart(String username) {
@@ -38,7 +40,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Map<UUID, Long> products = shoppingCart.getProducts();
         products.putAll(newProducts);
         shoppingCart.setProducts(products);
-        return ShoppingCartMapper.toShoppingCartDto(shoppingCartRepository.save(shoppingCart));
+        ShoppingCartDto shoppingCartDto = ShoppingCartMapper.toShoppingCartDto(shoppingCartRepository.save(shoppingCart));
+        warehouseClient.checkProductQuantityEnoughForShoppingCart(shoppingCartDto);
+        return shoppingCartDto;
     }
 
     @Override
@@ -71,7 +75,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Map<UUID, Long> products = shoppingCart.getProducts();
         products.put(request.getProductId(), request.getQuantity());
         shoppingCart.setProducts(products);
-        return ShoppingCartMapper.toShoppingCartDto(shoppingCartRepository.save(shoppingCart));
+        ShoppingCartDto shoppingCartDto = ShoppingCartMapper.toShoppingCartDto(shoppingCartRepository.save(shoppingCart));
+        warehouseClient.checkProductQuantityEnoughForShoppingCart(shoppingCartDto);
+        return shoppingCartDto;
     }
 
     private ShoppingCart getShoppingCartOrCreate(String username) {

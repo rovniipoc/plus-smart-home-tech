@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.*;
+import ru.yandex.practicum.feign.ShoppingStoreClient;
 import ru.yandex.practicum.service.ProductService;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("${ShoppingStore.api.prefix}")
-public class ShoppingStoreController {
+public class ShoppingStoreController implements ShoppingStoreClient {
 
     private final ProductService productService;
 
@@ -54,20 +55,19 @@ public class ShoppingStoreController {
 
     @PostMapping("/removeProductFromStore")
     @ResponseStatus(HttpStatus.OK)
-    public boolean removeProductFromStore(@RequestBody UUID id) {
+    public void removeProductFromStore(@RequestBody UUID id) {
         log.info("Поступил запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
         productService.removeProductFromStore(id);
         log.info("Выполнен запрос Post {}/removeProductFromStore на удаление (деактивацию) Product с id = {}", prefix, id);
-        return true;
     }
 
+    @Override
     @PostMapping("/quantityState")
     @ResponseStatus(HttpStatus.OK)
-    public boolean setProductQuantityState(@Valid @RequestBody SetProductQuantityStateRequest request) {
+    public void setProductQuantityState(@Valid @RequestBody SetProductQuantityStateRequest request) {
         log.info("Поступил запрос Post {}/quantityState на изменение количества Product с телом = {}", prefix, request);
         productService.setProductQuantityState(request);
         log.info("Выполнен запрос Post {}/quantityState на изменение количества Product с телом = {}", prefix, request);
-        return true;
     }
 
     @GetMapping("/{productId}")
