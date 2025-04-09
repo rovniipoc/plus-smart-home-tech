@@ -54,22 +54,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public boolean removeProductFromStore(UUID id) {
+    public void removeProductFromStore(UUID id) {
         Product existProduct = checkProductExist(id);
         existProduct.setProductState(ProductState.DEACTIVATE);
         productRepository.save(existProduct);
-        return true;
     }
 
     @Transactional
     @Override
-    public boolean setProductQuantityState(SetProductQuantityStateRequest request) {
+    public void setProductQuantityState(SetProductQuantityStateRequest request) {
         UUID id = request.getProductId();
         QuantityState quantityState = request.getQuantityState();
         Product existProduct = checkProductExist(id);
         existProduct.setQuantityState(quantityState);
         productRepository.save(existProduct);
-        return true;
     }
 
     @Override
