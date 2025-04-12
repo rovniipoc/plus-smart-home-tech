@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.UuidGenerator;
 import ru.yandex.practicum.dto.ProductCategory;
 import ru.yandex.practicum.dto.ProductState;
 import ru.yandex.practicum.dto.QuantityState;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "product_id")
     UUID productId;
 
