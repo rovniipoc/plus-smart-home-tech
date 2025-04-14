@@ -37,7 +37,7 @@ public class ShoppingStoreController implements ShoppingStoreClient {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDto> getProducts(@RequestParam(required = true) ProductCategory category,
-                                        @RequestParam(required = true) Pageable pageable) {
+                                        Pageable pageable) {
         log.info("Поступил запрос Get {} на получение List<ProductDto> с параметрами category = {}, pageable = {}", prefix, category, pageable);
         List<ProductDto> response = productService.getProductsByParams(category, pageable);
         log.info("Сформирован ответ Get {} с телом: {}", prefix, response);
