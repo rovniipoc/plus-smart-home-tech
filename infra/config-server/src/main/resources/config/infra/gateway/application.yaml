@@ -18,8 +18,8 @@ spring:
             - Path=/shopping-store/**
           filters:
             - PrefixPath=/api/v1 # Фильтр добавляющий префикс
-            - name: Retry # Фильтр позволяющий повторять попытки получения данных от shopping-store
-              args:
-                retries: 3 # Кол-во попыток
-                statuses: NOT_FOUND # Коды статуса HTTP, при которых следует повторить
-                # Подробнее: https://cloud.spring.io/spring-cloud-gateway/reference/html/#the-retry-gatewayfilter-factory
+#            - name: Retry # Фильтр позволяющий повторять попытки получения данных от shopping-store
+#              args:
+#                retries: 3 # Кол-во попыток
+#                statuses: NOT_FOUND # Коды статуса HTTP, при которых следует повторить
+#                # Подробнее: https://cloud.spring.io/spring-cloud-gateway/reference/html/#the-retry-gatewayfilter-factory
