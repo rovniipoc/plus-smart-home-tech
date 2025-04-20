@@ -10,10 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 import ru.yandex.practicum.dto.OrderState;
@@ -22,9 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @Table(name = "orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
