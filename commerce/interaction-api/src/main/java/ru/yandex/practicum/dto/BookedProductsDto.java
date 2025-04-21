@@ -19,7 +19,7 @@ public class BookedProductsDto {
 
     boolean fragile;
 
-    Map<UUID, Integer> products;
+    Map<UUID, Long> products;
 
     UUID orderId;
 
