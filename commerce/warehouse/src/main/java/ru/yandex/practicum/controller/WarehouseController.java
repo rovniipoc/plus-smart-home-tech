@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.*;
 import ru.yandex.practicum.feign.WarehouseClient;
 import ru.yandex.practicum.service.WarehouseService;
+
+import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -54,6 +58,28 @@ public class WarehouseController implements WarehouseClient {
         AddressDto response = warehouseService.getWarehouseAddress();
         log.info("Сформирован ответ Get {}/address с телом: {}", prefix, response);
         return response;
+    }
+
+    @Override
+    public void shippedToDelivery(ShippedToDeliveryRequest request) throws FeignException {
+        log.info("Получен запрос на передачу заказа в доставку: {}", request);
+        warehouseService.shipToDelivery(request);
+        log.info("Выполнен запрос на передачу заказа в доставку");
+    }
+
+    @Override
+    public BookedProductsDto assemblyProductsForOrder(AssemblyProductsForOrderRequest request) throws FeignException {
+        log.info("Получен запрос на сборку товаров для заказа: {}", request);
+        BookedProductsDto result = warehouseService.assemblyProducts(request);
+        log.info("Выполнен запрос на сборку товаров для заказа: {}", result);
+        return result;
+    }
+
+    @Override
+    public void returnProducts(Map<UUID, Long> products) throws FeignException {
+        log.info("Получен запрос на возврат товаров на склад: {}", products);
+        warehouseService.returnProductsToWarehouse(products);
+        log.info("Выполнен запрос на возврат товаров на склад: {}", products);
     }
 
 }
