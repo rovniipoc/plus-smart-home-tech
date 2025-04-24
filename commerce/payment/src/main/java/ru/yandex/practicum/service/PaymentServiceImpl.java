@@ -28,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final ShoppingStoreClient shoppingStoreClient;
     private final OrderClient orderClient;
-    private static final double VAT_RATE = 0.20;
+    private static final double VAT_RATE = 0.10;
 
     @Override
     @Transactional

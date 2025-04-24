@@ -5,7 +5,7 @@ import ru.yandex.practicum.model.Payment;
 
 public class PaymentMapper {
 
-    private static final double VAT_RATE = 0.20;
+    private static final double VAT_RATE = 0.10;
 
     public static Payment toPayment(OrderDto order) {
         Payment payment = new Payment();
