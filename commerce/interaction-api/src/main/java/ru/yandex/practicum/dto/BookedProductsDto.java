@@ -4,13 +4,24 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Map;
+import java.util.UUID;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookedProductsDto {
+
+    UUID bookingId;
 
     Double deliveryWeight;
 
     Double deliveryVolume;
 
     boolean fragile;
+
+    Map<UUID, Long> products;
+
+    UUID orderId;
+
+    UUID deliveryId;
 }
