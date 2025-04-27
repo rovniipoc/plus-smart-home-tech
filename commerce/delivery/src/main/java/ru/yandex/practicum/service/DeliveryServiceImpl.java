@@ -70,19 +70,26 @@ public class DeliveryServiceImpl implements DeliveryService {
         Address warehouseAddress = delivery.getFromAddress();
         Address destinationAddress = delivery.getToAddress();
 
-        double totalCost = BASE_RATE;
+        double totalCost;
 
-        totalCost += warehouseAddress.getCity().equals("ADDRESS_1")
-                ? totalCost * WAREHOUSE_1_ADDRESS_MULTIPLIER : totalCost * WAREHOUSE_2_ADDRESS_MULTIPLIER;
+//        Коэффициент к стоимости, зависящий от адреса склада:
+//        Если адрес склада содержит название ADDRESS_1, то К = 1 + WAREHOUSE_1_ADDRESS_MULTIPLIER
+//        Если адрес склада содержит название ADDRESS_2, то К = 1 + WAREHOUSE_2_ADDRESS_MULTIPLIER
+        double addressMultiplier = warehouseAddress.getCity().equals("ADDRESS_1")
+                ? 1 + WAREHOUSE_1_ADDRESS_MULTIPLIER : 1 + WAREHOUSE_2_ADDRESS_MULTIPLIER;
+//        Коэффициент к стоимости, зависящий от хрупкости:
+//        Если в заказе есть признак хрупкости, то К = 1 + FRAGILE_MULTIPLIER, иначе К = 1
+        double fragileMultiplier = Boolean.TRUE.equals(order.getFragile()) ? 1 + FRAGILE_MULTIPLIER : 1;
 
-        totalCost += Boolean.TRUE.equals(order.getFragile()) ? totalCost * FRAGILE_MULTIPLIER : 0;
+        double weightCost = order.getDeliveryWeight() * WEIGHT_MULTIPLIER;
+        double volumeCost = order.getDeliveryVolume() * VOLUME_MULTIPLIER;
 
-        totalCost += order.getDeliveryWeight() * WEIGHT_MULTIPLIER;
+//        Если нужно доставить на ту же улицу, где находится склад (улица доставки совпадает с адресом склада),
+//        то стоимость доставки не увеличивается (К = 1). Иначе К = 1 + STREET_MULTIPLIER
+        double streetMultiplier = warehouseAddress.getStreet().equals(destinationAddress.getStreet())
+                ? 1 : 1 + STREET_MULTIPLIER;
 
-        totalCost += order.getDeliveryVolume() * VOLUME_MULTIPLIER;
-
-        totalCost += warehouseAddress.getStreet().equals(destinationAddress.getStreet())
-                ? 0 : totalCost * STREET_MULTIPLIER;
+        totalCost = (BASE_RATE * addressMultiplier * fragileMultiplier + weightCost + volumeCost) * streetMultiplier;
 
         log.info("Стоимость доставки рассчитана: {}", totalCost);
         return totalCost;
