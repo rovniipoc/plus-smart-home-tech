@@ -74,7 +74,7 @@ Docker
 Postman
 Микросервисная архитектура
 gRPC
-Protobuf
+Protobuf 
 AVRO
 Kafka
 Feign Client
